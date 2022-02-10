@@ -1,21 +1,15 @@
-# QAtest
+# Installation
+you need npm installed on your computer (https://www.npmjs.com/)
+you need the webdriver for the broeser you are going to use (https://www.npmjs.com/package/selenium-webdriver), remember to add it in your path variable
 
-## Task
+you need to open a terminal in the root folder and execute "npm install" in order to install all the required plugins
 
-Please write a test harness that:
-- Validates the v2/orders API endpoint.
-- Log a user in and verify page structure
-- Go to https://portal.staging.scalapay.com/login and log the user
-- Validate that the user is taken to the Dashboard screen.
-- Validate that the structure of the page is as expected.
+# Configuration
+inside Configuration / Capabilities you have to specify the browser you are going to use and a valid phone number
 
-## Testing Credentials:
+# Executioin
+you need to open a terminal in the root folder and execute "npm test"
 
-- https://staging.api.scalapay.com/
-- https://portal.staging.scalapay.com/login
-
-
-## Additional:
-
-- It is recommended that you use Node.js to drive the test harness also please include in the README.md file instructions on how to run the test on our machines.
-- In addition to the above, please write a recommendation on how we can use the above tests across our Development, Staging and Production environments.
+# Results
+you can view the results directly in the console or you can find an HTML report in the folder "mochawesome-report"; open it with your preferred browser.
+The results are also available in the same folder as json file.
