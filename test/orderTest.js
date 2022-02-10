@@ -37,15 +37,52 @@ describe( "Testing v2/orders endpoint", function() {
           }
     });
 
-    it.only("this is the happy path", async function(){
+    it("this is the happy path", async function(){
         return utilities.makeRequest(httpOptions, contentData)
          .then(function(data){
              expect(data).to.have.all.keys("token", "expires","checkoutUrl");
          });
      });
-
-
-
-
+     
+     it("if totalAmount is missing return proper error message", async function(){
+      return removeMandatoryFieldAndTest("totalAmount", "body", contentData);
+    });
+    
+    it("if consumer is missing return proper error message", async function(){
+      return removeMandatoryFieldAndTest("consumer", "body", contentData);
+    });
+    
+    it("if shipping is missing return proper error message", async function(){
+      return removeMandatoryFieldAndTest("shipping", "body", contentData);
+    });
+    
+    it("if items is missing return proper error message", async function(){
+      return removeMandatoryFieldAndTest("items", "body", contentData);
+    });
+    
+    it("if merchant is missing return proper error message", async function(){
+      return removeMandatoryFieldAndTest("merchant", "body", contentData);
+    });
 
 });
+
+
+
+function removeMandatoryFieldAndTest(field, position, content) {
+  // remove the field from the body
+  delete content[field];
+    // make the request
+    return utilities.makeRequest(httpOptions, content)
+    .then(function(data){
+        // check the error code is present
+        expect(data["errorCode"]).to.be.equal("api_validationerror");
+        const errors = data["message"]["errors"];
+        // there should be only one error
+        expect(errors.length).to.be.equal(1);
+        const error = errors[0];
+        // verify the error is related to the missing field
+        expect(error["location"]).to.be.equal(position);
+        expect(error["field"][0]).to.be.equal(field);
+        expect(error["types"][0]).to.be.equal("any.required");
+    }); 
+}
