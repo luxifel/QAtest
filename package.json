@@ -4,7 +4,7 @@
   "description": "Qa test study case",
   "main": "index.js",
   "scripts": {
-    "test": "mocha"
+    "test": "mocha --no-timeouts --parallel --inline-diffs --reporter mochawesome --require mochawesome/register"
   },
   "repository": {
     "type": "git",
