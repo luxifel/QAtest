@@ -1,0 +1,25 @@
+{
+  "name": "qatest",
+  "version": "1.0.0",
+  "description": "Qa test study case",
+  "main": "index.js",
+  "scripts": {
+    "test": "mocha --no-timeouts --inline-diffs --reporter mochawesome --require mochawesome/register"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Dedal89/QAtest.git"
+  },
+  "author": "nriboni",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Dedal89/QAtest/issues"
+  },
+  "homepage": "https://github.com/Dedal89/QAtest#readme",
+  "devDependencies": {
+    "chai": "^4.3.6",
+    "mocha": "^9.2.0",
+    "mochawesome": "^7.0.1",
+    "selenium-webdriver": "^4.1.1"
+  }
+}
