@@ -9,9 +9,11 @@ describe( "Verify login page", function() {
     var driver;
     var path = "/login";
 
-    beforeEach( function() {
+    beforeEach( async function() {
         // before each test open a new browser window in order to start from a clean state
         driver = new Builder().forBrowser(capabilities.browser).build();
+        // navigate to login page
+        await driver.get(capabilities.endpoint + path);
 
     });
 
@@ -21,8 +23,6 @@ describe( "Verify login page", function() {
     });
 
     it( "Login page successfully load", async function() {
-        // navigate to login page
-        await driver.get(capabilities.endpoint + path);
 
         // check if title is "Registrati o accedi"
         // TODO move hardcoded italian strings into configuration file
@@ -38,6 +38,65 @@ describe( "Verify login page", function() {
         // compare expected and actual titles
         expectedTitle.should.be.equal(titleText);
     });
+
+    it( "Verify empty phone number returns error", async function() {
+
+        // without any action click on login button
+        await driver.findElement(By.id("scala-login")).click();
+
+        const expectedErrorMessage = "Inserisci un numero di cellulare valido";
+
+        // get error message text
+        let invalidText = await driver.findElement(By.css("div.invalid-feedback")).getText().then(function(value) {
+            return value;
+        })
+
+        // compare
+        expectedErrorMessage.should.be.equal(invalidText);
+
+    });
+
+    it( "Verify invalid numeric phone number returns error", async function() {
+        const phoneFieldID = "phoneNumber";
+
+        // insert invalid numeric number
+        await driver.findElement(By.id(phoneFieldID)).sendKeys("0000")
+
+        // click on login button
+        await driver.findElement(By.id("scala-login")).click();
+
+        const expectedErrorMessage = "Inserisci un numero di cellulare valido";
+
+        // get error message text
+        let invalidText = await driver.findElement(By.css("div.invalid-feedback")).getText().then(function(value) {
+            return value;
+        })
+
+        // compare
+        expectedErrorMessage.should.be.equal(invalidText);
+
+    })
+
+    it( "Verify invalid character phone number returns error", async function() {
+        const phoneFieldID = "phoneNumber";
+
+        // insert invalid numeric number
+        await driver.findElement(By.id(phoneFieldID)).sendKeys("abcd")
+
+        // click on login button
+        await driver.findElement(By.id("scala-login")).click();
+
+        const expectedErrorMessage = "Inserisci un numero di cellulare valido";
+
+        // get error message text
+        let invalidText = await driver.findElement(By.css("div.invalid-feedback")).getText().then(function(value) {
+            return value;
+        })
+
+        // compare
+        expectedErrorMessage.should.be.equal(invalidText);
+
+    })
 
 
 });
