@@ -114,5 +114,9 @@ describe( "Verify login page", function() {
         });
     });
 
+    // TODO I tried to bypass OTP but I wasn't able to do it in the 2 hours timeslot, my idea is to register
+    // to an online website like https://www.infobip.com/ and use their API to retrieve the OTP sms value.
+    
+
 
 });
