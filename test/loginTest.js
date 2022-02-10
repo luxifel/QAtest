@@ -57,10 +57,9 @@ describe( "Verify login page", function() {
     });
 
     it( "Verify invalid numeric phone number returns error", async function() {
-        const phoneFieldID = "phoneNumber";
 
         // insert invalid numeric number
-        await driver.findElement(By.id(phoneFieldID)).sendKeys("0000")
+        await driver.findElement(By.id("phoneNumber")).sendKeys("0000");
 
         // click on login button
         await driver.findElement(By.id("scala-login")).click();
@@ -75,13 +74,12 @@ describe( "Verify login page", function() {
         // compare
         expectedErrorMessage.should.be.equal(invalidText);
 
-    })
+    });
 
     it( "Verify invalid character phone number returns error", async function() {
-        const phoneFieldID = "phoneNumber";
 
         // insert invalid numeric number
-        await driver.findElement(By.id(phoneFieldID)).sendKeys("abcd")
+        await driver.findElement(By.id("phoneNumber")).sendKeys("abcd");
 
         // click on login button
         await driver.findElement(By.id("scala-login")).click();
@@ -96,7 +94,25 @@ describe( "Verify login page", function() {
         // compare
         expectedErrorMessage.should.be.equal(invalidText);
 
-    })
+    });
+
+    it.only( "Verify correct phone number goes to OTP page", async function() {
+
+        // insert invalid numeric number
+        await driver.findElement(By.id("phoneNumber")).sendKeys(capabilities.phoneNumber);
+
+        // click on login button
+        await driver.findElement(By.id("scala-login")).click();
+
+        // page need some time to load
+        await driver.sleep(3000);
+
+        // get error message text
+        await driver.findElement(By.id("oneTimePassword")).isDisplayed().then(function(isVisible){
+            // OTP field should be visible
+            isVisible.should.be.true;
+        });
+    });
 
 
 });
