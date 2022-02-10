@@ -96,7 +96,7 @@ describe( "Verify login page", function() {
 
     });
 
-    it.only( "Verify correct phone number goes to OTP page", async function() {
+    it( "Verify correct phone number goes to OTP page", async function() {
 
         // insert invalid numeric number
         await driver.findElement(By.id("phoneNumber")).sendKeys(capabilities.phoneNumber);
