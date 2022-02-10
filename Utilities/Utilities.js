@@ -1,10 +1,10 @@
-const https = require("https");
+const http = require("https");
 
-module.export = {
-    // utility method to make http request and convert to promise
+module.exports = {
+     // utility method to make http request and convert to promise
     makeRequest(options, data) {
         return new Promise((resolve, reject) => {
-            const req = https.request(options, function (res) {
+            const req = http.request(options, function (res) {
                 const chunks = [];
             
                 res.on("data", function (chunk) {
@@ -24,7 +24,6 @@ module.export = {
 
             req.write(JSON.stringify(data));
             req.end();
-        });
-
+        })
     }
-}
+};
