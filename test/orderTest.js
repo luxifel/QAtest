@@ -64,6 +64,23 @@ describe( "Testing v2/orders endpoint", function() {
       return removeMandatoryFieldAndTest("merchant", "body", contentData);
     });
 
+    it.only("verify totalAmount can not be a string", async function(){
+      contentData["totalAmount"]["amount"] = "aaa";
+      return utilities.makeRequest(httpOptions, contentData)
+       .then(function(data){
+         // check the error code is present
+         expect(data["errorCode"]).to.be.equal("api_validationerror");
+         const errors = data["message"]["errors"];
+         // there should be only one error
+        expect(errors.length).to.be.equal(1);
+        const error = errors[0];
+        // verify the error is related to the failing regex
+        expect(error["field"]).to.have.all.members(["totalAmount", "amount"]);
+        expect(error["types"][0]).to.be.equal("string.regex.base");
+
+       });
+   });
+
 });
 
 
